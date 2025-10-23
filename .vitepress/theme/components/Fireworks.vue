@@ -48,17 +48,17 @@ let handleResize: () => void
 function createFireworks() {
   // 确保在重新创建前清理
   cleanup()
-  
+
   const lightColors = ['102, 167, 221', '62, 131, 225', '33, 78, 194']
   const darkColors = ['252, 146, 174', '202, 180, 190', '207, 198, 255']
-  
+
   const defaultConfig: FireworksConfig = {
     colors: state.darkMode === 'dark' ? darkColors : lightColors,
-    numberOfParticles: 20,
-    orbitRadius: { min: 50, max: 100 },
-    circleRadius: { min: 10, max: 20 },
-    diffuseRadius: { min: 50, max: 100 },
-    animeDuration: { min: 900, max: 1500 },
+    numberOfParticles: 5,
+    orbitRadius: { min: 25, max: 25 },
+    circleRadius: { min: 12, max: 12 },
+    diffuseRadius: { min: 30, max: 30 },
+    animeDuration: { min: 1200, max: 1200 },
   }
 
   let pointerX = 0
@@ -76,8 +76,10 @@ function createFireworks() {
   }
 
   function updateCoords(e: MouseEvent | TouchEvent) {
-    pointerX = e instanceof MouseEvent ? e.clientX : e.touches[0]?.clientX || e.changedTouches[0]?.clientX
-    pointerY = e instanceof MouseEvent ? e.clientY : e.touches[0]?.clientY || e.changedTouches[0]?.clientY
+    pointerX =
+      e instanceof MouseEvent ? e.clientX : e.touches[0]?.clientX || e.changedTouches[0]?.clientX
+    pointerY =
+      e instanceof MouseEvent ? e.clientY : e.touches[0]?.clientY || e.changedTouches[0]?.clientY
   }
 
   function setParticleDirection(p: Particle) {
@@ -121,15 +123,18 @@ function createFireworks() {
       y,
       color: state.darkMode === 'dark' ? 'rgb(233, 179, 237)' : 'rgb(106, 159, 255)',
       radius: 0.1,
-      alpha: 0.5,
-      lineWidth: 6,
+      alpha: 0.6,
+      lineWidth: 4,
       draw() {
         ctx.globalAlpha = this.alpha!
         ctx.beginPath()
         ctx.arc(this.x, this.y, this.radius!, 0, 2 * Math.PI, true)
+
         ctx.lineWidth = this.lineWidth!
-        ctx.strokeStyle = this.color!
+        //ctx.globalAlpha = 1
+        ctx.strokeStyle = 'white'
         ctx.stroke()
+        ctx.restore()
         ctx.globalAlpha = 1
       },
     }
@@ -137,7 +142,7 @@ function createFireworks() {
   }
 
   function renderParticle(anim: anime.AnimeInstance) {
-    anim.animatables.forEach(animatable => {
+    anim.animatables.forEach((animatable) => {
       const target = animatable.target as unknown as Particle
       if (typeof target.draw === 'function') {
         target.draw()
@@ -147,31 +152,41 @@ function createFireworks() {
 
   function animateParticles(x: number, y: number) {
     const circle = createCircle(x, y)
-    const particles: Particle[] = Array.from({ length: defaultConfig.numberOfParticles }, () => createParticle(x, y))
+    const particles: Particle[] = Array.from({ length: defaultConfig.numberOfParticles }, () =>
+      createParticle(x, y),
+    )
 
-    anime.timeline()
+    anime
+      .timeline()
       .add({
         targets: particles,
-        x(p: Particle) { return p.endPos!.x },
-        y(p: Particle) { return p.endPos!.y },
+        x(p: Particle) {
+          return p.endPos!.x
+        },
+        y(p: Particle) {
+          return p.endPos!.y
+        },
         radius: 0,
         duration: anime.random(defaultConfig.animeDuration.min, defaultConfig.animeDuration.max),
         easing: 'easeOutExpo',
         update: renderParticle,
       })
-      .add({
-        targets: circle,
-        radius: anime.random(defaultConfig.orbitRadius.min, defaultConfig.orbitRadius.max),
-        lineWidth: 0,
-        alpha: {
-          value: 0,
-          easing: 'linear',
-          duration: anime.random(600, 800),
+      .add(
+        {
+          targets: circle,
+          radius: anime.random(defaultConfig.orbitRadius.min, defaultConfig.orbitRadius.max),
+          lineWidth: 0,
+          alpha: {
+            value: 0,
+            easing: 'linear',
+            duration: anime.random(600, 600),
+          },
+          duration: anime.random(1200, 1200),
+          easing: 'easeOutExpo',
+          update: renderParticle,
         },
-        duration: anime.random(1200, 1800),
-        easing: 'easeOutExpo',
-        update: renderParticle,
-      }, 0)
+        0,
+      )
   }
 
   const render = anime({
@@ -198,9 +213,12 @@ onMounted(() => {
 })
 
 // 监听暗色模式变化
-watch(() => state.darkMode, () => {
-  createFireworks()
-})
+watch(
+  () => state.darkMode,
+  () => {
+    createFireworks()
+  },
+)
 
 // 组件卸载时清理
 onUnmounted(() => {
