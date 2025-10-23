@@ -99,17 +99,17 @@ export default defineConfigWithTheme<ThemeConfig>({
     footerName: '牛战士',
     poweredList: [
       { name: 'VitePress', url: 'https://github.com/vuejs/vitepress' },
-      { name: 'GitHub Pages', url: 'https://docs.github.com/zh/pages' },
+      { name: 'Vercel', url: 'https://vercel.com/' },
       { name: 'KappaTech', url: 'https://thwiki.cc' },
       { name: 'SCHALE', url: 'https://kivo.wiki' },
     ],
 
     //gitalk配置
-    clientID: 'Ov23lia9U9wFN3WMyoKK',
-    clientSecret: 'b2418ab598c188c43a247c99e728dd2735d58c3b',
+    clientID: 'Iv23li0cZy15pRylDdw4',
+    clientSecret: 'f3ec14b99d9bce3152eec0590aa676ef374cefc2',
     repo: 'vitepress-theme-bluearchive',
-    owner: 'Alittfre',
-    admin: ['Alittfre'],
+    owner: 'sinokkkk',
+    admin: ['sinokkkk'],
   },
   markdown: {
     theme: 'solarized-dark',

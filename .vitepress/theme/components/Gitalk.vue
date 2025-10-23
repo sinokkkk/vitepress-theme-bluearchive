@@ -31,15 +31,14 @@ onMounted(() => {
   color: var(--font-color-grey);
   background-color: var(--general-background-color) !important;
   transition: background-color 0.5s, color 0.5s !important;
-  
 }
-.gt-container .gt-comment-content{
+.gt-container .gt-comment-content {
   background-color: var(--gitalk-background) !important;
   border-radius: 10px;
-  p{
+  p {
     color: var(--font-color-grey);
   }
-  ol{
+  ol {
     color: var(--gitalk-font-color-ol);
   }
   .email-fragment {
@@ -52,7 +51,7 @@ onMounted(() => {
 
 .gt-container .gt-comment-content:hover {
   -webkit-box-shadow: var(--gitalk-shadow) !important;
-          box-shadow: var(--gitalk-shadow) !important; 
+  box-shadow: var(--gitalk-shadow) !important;
 }
 
 .gt-container .gt-comment-body {
