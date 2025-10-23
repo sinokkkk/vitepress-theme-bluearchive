@@ -4,6 +4,7 @@
       <span class="logo">
         <img @dragstart.prevent src="../../assets/icon/navLogo.svg" alt="" />
       </span>
+
       <span class="menu">
         <ul>
           <li v-for="item in menuList">
@@ -11,6 +12,7 @@
           </li>
         </ul>
       </span>
+
       <div
         class="hamburger"
         :class="{ active: state.showDropdownMenu }"
@@ -20,6 +22,7 @@
         <span class="line"></span>
         <span class="line"></span>
       </div>
+
       <DropdownMenu :showMenu="state.showDropdownMenu"></DropdownMenu>
     </nav>
   </header>
@@ -27,15 +30,17 @@
 </template>
 
 <script setup lang="ts">
+//usedata
 import { useData } from 'vitepress'
-
-const base = useData().site.value.base
+const base = useData().site.value.base //默认值'/'
 const themeConfig = useData().theme.value
 const menuList = themeConfig.menuList
 
+//存储的变量
 import { useStore } from '../../store'
 const { state } = useStore()
 
+//组件
 import SearchDialog from './Search-Dialog.vue'
 import DropdownMenu from './Dropdown-Menu.vue'
 

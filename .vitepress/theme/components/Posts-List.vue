@@ -3,7 +3,9 @@
     <TransitionGroup class="posts-list" name="list" tag="div">
       <article class="post" v-for="post in postsList" :key="post.href">
         <span v-if="post.pinned" class="pinned"></span>
+
         <header class="post-header">
+          <!-- 如果有cover 渲染一个container组件 -->
           <div v-if="post.cover" class="cover-container">
             <img
               :src="post.cover"
@@ -11,7 +13,9 @@
               :alt="post.title + '-cover'"
               loading="lazy"
             />
+            <!-- 直到图片接近视口时才加载。这有助于提高页面加载性能 还有个vbind-->
           </div>
+
           <div class="header-content">
             <div class="title">
               <div class="title-dot" v-if="!post.cover"></div>
@@ -19,20 +23,30 @@
                 <a :href="base + post.href">{{ post.title }}</a>
               </h1>
             </div>
+            <!-- 如果有封面不渲染长条 -->
+
             <div class="meta-info-bar">
+              <!-- 时间图标 -->
               <span class="iconfont icon-time time"></span>
+
+              <!-- datetime属性以及这个元素仅作为语义化 可以删 信息由定义的函数格式化 改成span都没问题-->
               <div class="time-info">
                 <time datetime="">{{ formatDate(post.create) }}</time>
               </div>
+
+              <!-- wordcount可能没定义,后续我来补上 -->
               <div class="wordcount seperator">约{{ post.wordCount }}字</div>
             </div>
+
             <ul class="tags">
               <li v-for="tag in post.tags">
-                <a :href="`${base}tags/`" @click="state.currTag = tag"
-                  ><i class="iconfont icon-tag"></i> {{ tag }}</a
-                >
+                <a :href="`${base}tags/`" @click="state.currTag = tag">
+                  <i class="iconfont icon-tag"></i>
+                  {{ tag }}
+                </a>
               </li>
             </ul>
+
             <div class="excerpt">
               <p>{{ post.excerpt }}</p>
             </div>
@@ -40,6 +54,7 @@
         </header>
       </article>
     </TransitionGroup>
+
     <div v-if="totalPage != 1" class="pagination">
       <button
         :disabled="currPage === 1"
@@ -95,6 +110,7 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 import { useData } from 'vitepress'
 import { ref, computed, onMounted, watch } from 'vue'
@@ -243,13 +259,14 @@ watch(
   },
 )
 </script>
+
 <style scoped lang="less">
 .list-move,
 .list-enter-active,
 .list-leave-active {
   transition: all 0.5s;
 }
-
+//先声明一个全体0.5s动画
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
@@ -272,8 +289,7 @@ watch(
 
 .posts-list {
   position: relative;
-  overflow-wrap: break-word;
-
+  overflow-wrap: break-word; //本身很少东西,主要的是在post等子类里
   .post {
     display: flex;
     flex-direction: column;
@@ -309,7 +325,8 @@ watch(
       align-items: stretch;
 
       .cover-container {
-        flex: 0 0 180px;
+        flex: 0 0 180px; //flex-grow 0 flex-shrink 0 flex-basis 180px
+        //不占用额外空间也不会缩小 初始宽180px
         height: 140px;
         border-radius: 12px;
         overflow: hidden;
@@ -323,7 +340,7 @@ watch(
           object-fit: cover;
           transition: transform 0.3s ease;
           &:hover {
-            transform: scale(1.05);
+            transform: scale(1.5);
           }
         }
       }
@@ -341,7 +358,7 @@ watch(
           display: flex;
           align-items: flex-end;
         }
-      }
+      } //这一块基本没用
     }
 
     @media (max-width: 768px) {
@@ -370,14 +387,14 @@ watch(
 
     .title-dot {
       width: 4px;
-      height: 20px;
+      height: 24px;
       position: absolute;
       left: -16px;
-      top: 9.5px;
+      top: 3px;
       background: var(--pot-border-left);
       border-radius: 2px;
       transition: background 0.5s;
-    }
+    } //修改一下 严格对齐标题
 
     .name {
       display: flex;
@@ -403,9 +420,9 @@ watch(
     .time {
       font-size: 13px;
       color: var(--font-color-grey);
-      margin: 3px 2px 0 0;
+      margin: 0px 2px 0 0;
       font-weight: bold;
-    }
+    } //严格对齐时间
 
     .seperator::before {
       content: '';

@@ -1,8 +1,10 @@
 <template>
   <Splash></Splash>
+
   <template v-if="!page.isNotFound">
     <main style="min-height: 100vh">
       <Navbar></Navbar>
+
       <Banner>
         <transition name="fade" mode="out-in">
           <WelcomeBox v-if="!state.splashLoading && page.filePath === 'index.md'"></WelcomeBox>
@@ -10,6 +12,7 @@
           <PostInnerBanner v-else></PostInnerBanner>
         </transition>
       </Banner>
+
       <transition name="fade" mode="out-in">
         <PostsList
           v-if="page.filePath === 'index.md' || page.filePath === 'tags/index.md'"
@@ -17,10 +20,13 @@
         <PostViewer v-else></PostViewer>
       </transition>
     </main>
+
     <Footer></Footer>
+
     <Fireworks v-if="state.fireworksEnabled"></Fireworks>
     <ClientOnly><SpinePlayer></SpinePlayer></ClientOnly>
     <ToTop></ToTop>
+
     <!-- 背景音乐元素 -->
     <audio id="background-music" loop>
       <source src="./assets/banner/bgm.mp3" type="audio/mpeg" />

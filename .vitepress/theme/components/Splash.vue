@@ -81,7 +81,7 @@ const preventDefault = (e) => {
 onMounted(() => {
   createBreathingAnimation()
   // 禁用滚轮事件
-  window.addEventListener('wheel', preventDefault, { passive: false })
+  //window.addEventListener('wheel', preventDefault, { passive: false })
   setTimeout(() => {
     fadeOutSplash()
     // 启用滚轮事件
@@ -114,7 +114,7 @@ onUnmounted(() => {
   }
 
   :global(.circle-path) {
-    fill: #E0F0FA;
+    fill: #e0f0fa;
     fill-opacity: 0.9;
   }
 

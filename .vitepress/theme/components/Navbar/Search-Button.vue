@@ -10,6 +10,7 @@ const showDialog = () => {
   state.searchDialog = true
   state.showDropdownMenu = false
 }
+//点击触发事件,修改state变量
 </script>
 
 <style scoped lang="less">

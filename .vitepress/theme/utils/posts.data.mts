@@ -28,9 +28,9 @@ interface Post {
 const cache: Map<string, { timestamp: number; post: Post }> = new Map()
 
 function countWords(text: string): number {
-  // 将连续的英文字母串替换为单个字母
+  // 将连续的英文字母串替换为单个字母 fucking正则表达式
   const replacedText = text.replace(/[a-zA-Z]+/g, 'A')
-
+  //ts的字符串replace方法
   const pattern = /[\u4E00-\u9FA5A]/g
   const matches = replacedText.match(pattern)
 
@@ -63,7 +63,7 @@ function getPost(md: any, file: string, postDir: string): Post {
     wordCount: countWords(content),
     cover: data.cover,
     excerpt: excerpt,
-    pinned: !!data.pinned
+    pinned: !!data.pinned,
   }
 
   cache.set(fullPath, { timestamp, post })

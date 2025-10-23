@@ -1,8 +1,9 @@
 <template>
   <div class="search-dialog">
     <div class="dialog-cover" @click="closeDialog"></div>
+
     <div class="dialog-content">
-      <button type="button" class="close-btn" @click="closeDialog">×</button>
+      <button type="button" class="close-btn" @click="closeDialog">×</button>//用X表示关闭按钮
       <span class="title">搜索</span>
       <input
         type="text"
@@ -12,10 +13,14 @@
         v-model="searchStr"
         @input="search"
       />
+      <!-- name留空,不使用浏览器的表单提交 id提供样式选择 @search是一个监听事件 searchstr响应式传送数据-->
       <ul class="search-list">
-        <span>{{ status }}</span>
+        <span>{{ status }}</span
+        ><!-- 状态声明在这里 -->
+
         <li v-for="res in resultList" @click="closeDialog">
           <a :href="base + res.href">{{ res.title }}</a>
+          <!-- 里面的li全是锚点,点击先关闭对话框再传送到对应推文 -->
         </li>
       </ul>
     </div>
@@ -28,7 +33,7 @@ import { ref, onMounted } from 'vue'
 const emit = defineEmits(['closeDialog'])
 const closeDialog = (): void => {
   // 添加关闭动画
-  const dialog = document.querySelector('.search-dialog') as HTMLElement
+  const dialog = document.querySelector('.search-dialog') as HTMLElement //没给id,就用css选择器处理
   if (dialog) {
     dialog.classList.add('hide-dialog')
     setTimeout(() => {
@@ -37,22 +42,24 @@ const closeDialog = (): void => {
   }
 }
 
-import { data as posts } from '../../utils/posts.data'
-import MiniSearch, { SearchResult } from 'minisearch'
-import { useData } from 'vitepress'
+import { data as posts } from '../../utils/posts.data' //从xx文件导出data 重命名为posts
+import MiniSearch, { SearchResult } from 'minisearch' //第三方库 直接用即可
 
+import { useData } from 'vitepress'
 const base = useData().site.value.base
+
 const miniSearch = new MiniSearch({
-  fields: ['title', 'content'],
-  storeFields: ['title', 'href'],
+  fields: ['title', 'content'], //指定搜索应该针对什么字段
+  storeFields: ['title', 'href'], //搜索完成的返回片段 文章的标题和链接 用于锚点的跳转
   searchOptions: {
     fuzzy: 0.3,
-  },
+  }, //配置搜索选项,允许0.3的模糊搜索
 })
 miniSearch.addAll(posts)
+/*minisearch(小写)是MiniSearch(大写)的一个实例 对这个示例 导入已有推文*/
 
 const searchStr = defineModel<string>()
-const resultList = ref<SearchResult[]>([])
+const resultList = ref<SearchResult[]>([]) //minisearch的
 const status = ref('这里空空的')
 let timerId: ReturnType<typeof setTimeout> | null = null
 
@@ -62,7 +69,7 @@ function search(): void {
     clearTimeout(timerId)
   }
   timerId = setTimeout(() => {
-    resultList.value = miniSearch.search(searchStr.value || '').slice(0, 5)
+    resultList.value = miniSearch.search(searchStr.value || '').slice(0, 7) //需要优化搜索
     if (resultList.value.length) {
       status.value = '搜到了~'
     } else {
@@ -81,7 +88,7 @@ onMounted(() => {
 
 <style scoped lang="less">
 .search-dialog {
-  position: fixed;
+  position: fixed; //固定后,dialog不会随着滚轮而动
   top: 0;
   left: 0;
   width: 100%;
@@ -90,12 +97,12 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0;
+  opacity: 0; //从透明度为0,用fadein实现到1的动画
   animation: fadein 0.2s forwards;
 }
 // 遮罩
 .dialog-cover {
-  background: rgba(0, 0, 0, 0.614);
+  background: rgba(0, 0, 0, 0.614); //使用了单独的背景颜色
   position: absolute;
   top: 0;
   left: 0;
@@ -119,8 +126,8 @@ onMounted(() => {
   align-items: center;
   transform: scale(0.9);
   opacity: 0;
-  animation: pop-up 0.2s forwards;
-}
+  animation: pop-up 0.2s forwards; //一个弹出的动画效果,时间极短
+} //默认堆叠在先挂载的兄弟元素之上
 
 .dialog-content::before {
   content: '';

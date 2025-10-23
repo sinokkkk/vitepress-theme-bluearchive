@@ -11,11 +11,11 @@ interface StoreState {
   fireworksEnabled: boolean
   SpinePlayerEnabled: boolean
   showDropdownMenu: boolean
-  darkMode: 'light' | 'dark' | 'system'
+  darkMode: 'light' | 'dark' | 'system' //虽然变量叫darkmode,其实内含所有的
 }
 
 const state: StoreState = reactive({
-  selectedPosts: [],
+  selectedPosts: [], //选定的文章列表
   currTag: '',
   currPost: {
     id: 0,
@@ -28,7 +28,7 @@ const state: StoreState = reactive({
     wordCount: 0,
     cover: '',
     excerpt: '',
-    pinned: false
+    pinned: false,
   },
   currPage: 1,
   searchDialog: false,

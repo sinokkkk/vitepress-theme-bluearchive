@@ -3,9 +3,10 @@
     class="banner"
     :class="{ postViewer: state.currPost.href, loadingComplete: !state.splashLoading }"
   >
+    <!-- //welcomebox是个单独的组件 //:是v-bind 这是用于区别首页和文章预览的显示 -->
     <slot></slot>
 
-    <canvas id="wave"></canvas>
+    <!-- <canvas id="wave"></canvas> -->
     <video autoplay muted loop class="bg-video" v-if="videoBanner">
       <source src="../assets/banner/banner_video.mp4" type="video/mp4" />
     </video>
@@ -17,171 +18,31 @@
 import { useData } from 'vitepress'
 const themeConfig = useData().theme.value
 const videoBanner = themeConfig.videoBanner
+//由videobannner这个属性决定banner是放图片还是视频
 
 import { useStore } from '../store'
 const { state } = useStore()
 import { onMounted } from 'vue'
-class SiriWave {
-  K: number
-  F: number
-  speed: number
-  noise: number
-  phase: number
-  devicePixelRatio: number
-  width: number
-  height: number
-  MAX: number
-  canvas: HTMLCanvasElement
-  ctx: CanvasRenderingContext2D
-  run: boolean
-  animationFrameID: number | null
-
-  constructor() {
-    this.K = 1
-    this.F = 15
-    this.speed = 0.1
-    this.noise = 30
-    this.phase = 0
-    this.devicePixelRatio = window.devicePixelRatio || 1
-    this.width = this.devicePixelRatio * window.innerWidth
-    this.height = this.devicePixelRatio * 100
-    this.MAX = this.height / 2
-    this.canvas = document.getElementById('wave') as HTMLCanvasElement
-    this.canvas.width = this.width
-    this.canvas.height = this.height
-    this.canvas.style.width = this.width / this.devicePixelRatio + 'px'
-    this.canvas.style.height = this.height / this.devicePixelRatio + 'px'
-    this.ctx = this.canvas.getContext('2d')!
-    this.run = false
-    this.animationFrameID = null
-  }
-
-  _globalAttenuationFn(x: number) {
-    return Math.pow((this.K * 4) / (this.K * 4 + Math.pow(x, 4)), this.K * 2)
-  }
-
-  _drawLine(attenuation: number, color: string, width: number, noise: number, F: number) {
-    this.ctx.moveTo(0, 0)
-    this.ctx.beginPath()
-    this.ctx.strokeStyle = color
-    this.ctx.lineWidth = width || 1
-    F = F || this.F
-    noise = noise * this.MAX || this.noise
-    for (let i = -this.K; i <= this.K; i += 0.01) {
-      i = parseFloat(i.toFixed(2))
-      const x = this.width * ((i + this.K) / (this.K * 2))
-      const y =
-        this.height / 2 +
-        noise * Math.pow(Math.sin(i * 10 * attenuation), 1) * Math.sin(F * i - this.phase)
-      this.ctx.lineTo(x, y)
-    }
-    this.ctx.lineTo(this.width, this.height)
-    this.ctx.lineTo(0, this.height)
-    this.ctx.fillStyle = color
-    this.ctx.fill()
-  }
-
-  _clear() {
-    this.ctx.globalCompositeOperation = 'destination-out'
-    this.ctx.fillRect(0, 0, this.width, this.height)
-    this.ctx.globalCompositeOperation = 'source-over'
-  }
-
-  _draw() {
-    if (!this.run) {
-      return
-    }
-    this.phase = (this.phase + this.speed) % (Math.PI * 64)
-    this._clear()
-    // 获取计算后的 CSS 变量值
-    const wave1Color = getComputedStyle(document.documentElement)
-      .getPropertyValue('--wave-color1')
-      .trim()
-    const wave2Color = getComputedStyle(document.documentElement)
-      .getPropertyValue('--wave-color2')
-      .trim()
-
-    this._drawLine(0.5, wave1Color, 1, 0.35, 6)
-    this._drawLine(1, wave2Color, 1, 0.25, 6)
-    this.animationFrameID = requestAnimationFrame(this._draw.bind(this))
-  }
-
-  start() {
-    this.phase = 0
-    this.run = true
-    this._draw()
-  }
-
-  stop() {
-    this.run = false
-    this._clear()
-    if (this.animationFrameID !== null) {
-      cancelAnimationFrame(this.animationFrameID)
-      this.animationFrameID = null
-    }
-  }
-
-  setNoise(v: number) {
-    this.noise = Math.min(v, 1) * this.MAX
-  }
-
-  setSpeed(v: number) {
-    this.speed = v
-  }
-
-  set(noise: number, speed: number) {
-    this.setNoise(noise)
-    this.setSpeed(speed)
-  }
-}
-
-let currentWave: SiriWave | null = null
-
-function initAll() {
-  if (currentWave) {
-    currentWave.stop()
-  }
-  currentWave = new SiriWave()
-  currentWave.setSpeed(0.01)
-  currentWave.start()
-}
-
-function debounce(func: () => void, wait: number) {
-  let timeout: number | undefined
-  return function () {
-    clearTimeout(timeout)
-    timeout = window.setTimeout(() => {
-      func()
-    }, wait)
-  }
-}
-
-onMounted(() => {
-  initAll()
-  window.addEventListener(
-    'resize',
-    debounce(() => {
-      if (currentWave) {
-        currentWave.stop()
-      }
-      initAll()
-    }, 100),
-  )
-})
 </script>
+
 <style scoped lang="less">
 .banner {
-  transform: translateZ(0);
+  /* 横幅容器 - 网站顶部展示区域 */
+  transform: translateZ(0); /* 开启GPU加速，优化动画性能 */
   display: flex;
-  flex-direction: column;
-  align-items: center;
+
+  flex-direction: column; /* 垂直布局 */
+  align-items: center; /* 水平居中 */
   justify-content: center;
+
   position: absolute;
-  top: 0;
-  width: 100%;
-  height: 75vh;
+
+  top: 0; /* 顶部对齐 */
+  width: 100%; /* 全宽 */
+  height: 75vh; /* 高度占视口的75% */
   mask: linear-gradient(to top, transparent, var(--general-background-color) 5%);
-  perspective: 1000px;
+  /* 底部渐变遮罩：从透明到背景色，实现内容淡出效果 */
+  perspective: 1000px; /* 制造卡片3D透视效果 */
   overflow: hidden;
   -webkit-user-drag: none;
   transition: height 0.3s;
@@ -203,9 +64,12 @@ onMounted(() => {
 }
 
 @keyframes fade-blur-in {
+  //淡入模糊进入
   from {
     filter: var(--blur-val);
+    // 在vars.less文件里,深色和浅色不一样
     transform: scale(1.5);
+    //放大1.5倍
   }
 
   to {
@@ -219,17 +83,17 @@ onMounted(() => {
 }
 
 .bg-img {
-  background-image: url(../assets/banner/banner.webp);
+  background-image: url(../assets/banner/banner.webp); //url变量
   html[theme='dark'] & {
     background-image: url(../assets/banner/banner_dark.webp), url(../assets/banner/banner.webp);
-  }
+  } //属性选择器,对theme是dark的html 的 .bg-img,采取xx的url
   position: absolute;
-  top: 0;
-  width: 100%;
+  top: 0; //将元素顶部与父元素顶部对齐
+  width: 100%; //宽度高度占满父元素
   height: 100%;
-  background-size: cover;
-  background-position: center center;
-  filter: var(--img-brightness); /* 添加亮度过滤器 */
+  background-size: cover; //背景图片会缩放以完全覆盖背景区域，可能会裁剪图片。
+  background-position: center center; //背景图片在水平和垂直方向都居中显示。
+  filter: var(--img-brightness); /* 添加亮度过滤器 由变量--img-brightness决定*/
   transition: filter 0.5s, background-image 0.5s; /* 添加过渡效果 */
 }
 
@@ -241,11 +105,5 @@ onMounted(() => {
   object-fit: cover;
   /* 禁用视频拖动 */
   -webkit-user-drag: none;
-}
-
-#wave {
-  position: absolute;
-  bottom: 0;
-  z-index: 50;
 }
 </style>

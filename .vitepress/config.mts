@@ -78,10 +78,12 @@ export default defineConfigWithTheme<ThemeConfig>({
     ],
 
     //banner区配置
-    videoBanner: false,
-    name: "Sensei's 部落格",
-    welcomeText: 'Hello, VitePress',
-    motto: ['和你的日常，就是奇迹', '何気ない日常で、ほんの少しの奇跡を見つける物語。'],
+    videoBanner: true,
+    name: 'sinok',
+    welcomeText: '牛战士',
+    motto: ['transition: transform 0.2s, color 0.5s, text-shadow 0'],
+    //motto: ['和你的日常，就是奇迹', '何気ない日常で、ほんの少しの奇跡を見つける物語。'],
+
     social: [
       { icon: 'github', url: 'https://github.com/' },
       { icon: 'bilibili', url: 'https://www.bilibili.com/' },
@@ -93,10 +95,12 @@ export default defineConfigWithTheme<ThemeConfig>({
     spineVoiceLang: 'jp',
 
     //footer配置
-    footerName: 'Sensei',
+    footerName: '牛战士',
     poweredList: [
       { name: 'VitePress', url: 'https://github.com/vuejs/vitepress' },
       { name: 'GitHub Pages', url: 'https://docs.github.com/zh/pages' },
+      { name: 'KappaTech', url: 'https://thwiki.cc' },
+      { name: 'SCHALE', url: 'https://kivo.wiki' },
     ],
 
     //gitalk配置

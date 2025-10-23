@@ -4,10 +4,11 @@
   </span>
 </template>
 
+//template很少
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
-const isPlaying = ref(false) // 音乐播放状态
+const isPlaying = ref(false) // 音乐播放状态,默认为false
 const music = ref<HTMLAudioElement | null>(null)
 
 const toggleMusic = () => {
@@ -39,7 +40,7 @@ onMounted(() => {
   cursor: pointer;
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   &:hover {
-    transform: translateY(-3px);
+    transform: translateY(-3px); //悬停的时候稍微往上抬了一点
   }
 }
 
