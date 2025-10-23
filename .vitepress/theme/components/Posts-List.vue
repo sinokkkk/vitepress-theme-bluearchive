@@ -607,7 +607,7 @@ watch(
     }
   }
   .excerpt {
-    padding: 0 36px;
+    padding: 0;
     margin-bottom: 4px;
     font-size: 12px;
   }
