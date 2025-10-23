@@ -34,7 +34,7 @@ const selectedTheme = ref('system') //默认system
 
 const toggles = {
   fireworksEnabled: '特效',
-  //SpinePlayerEnabled: 'Spine',
+  SpinePlayerEnabled: 'Spine',
 }
 
 let darkModeMediaQuery: MediaQueryList //类型叫 MediaQueryList
