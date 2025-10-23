@@ -6,7 +6,7 @@ import 'normalize.css'
 import './assets/icon/iconfont.css'
 import './styles/index.less'
 import './components/Spine-Player/spine-player.css'
-
+import '@fontsource/jetbrains-mono'
 export default {
   Layout, //以layout作为入口文件导出
   enhanceApp({ app, router, siteData }) {

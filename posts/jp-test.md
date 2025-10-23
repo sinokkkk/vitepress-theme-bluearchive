@@ -1,6 +1,6 @@
 ---
 title: 日本語テスト
-date: 2013-12-24
+date: 2023-12-24
 tags: [Japanese, test]
 head:
   - - meta

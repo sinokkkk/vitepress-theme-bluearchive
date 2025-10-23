@@ -113,7 +113,7 @@ const themeConfig = useData().theme.value
   }
 
   code {
-    font-family: 'JetBrains Mono', sans-serif;
+    font-family: 'JetBrains Mono', sans-serif !important;
     line-height: 0; // 修复行号对齐
     border-radius: 3px;
   }
@@ -301,6 +301,9 @@ const themeConfig = useData().theme.value
  * -------------------------------------------------------------------------- */
 
   div[class*='language-'] {
+    margin: 0 auto;
+    max-width: 90%;
+    font-size: 14px;
     display: flex;
     flex-direction: row-reverse;
     position: relative;
@@ -309,7 +312,7 @@ const themeConfig = useData().theme.value
     border-radius: 16px;
     box-shadow: 0px 0px 5px #c1c1c1;
     overflow: hidden;
-    padding-top: 48px;
+    padding-top: 40px;
     margin-bottom: 10px;
     html[theme='dark'] & {
       background-color: #1f1f2c;
@@ -351,7 +354,7 @@ const themeConfig = useData().theme.value
       top: 0;
       left: 0;
       right: 0;
-      height: 48px;
+      height: 40px;
       border-bottom: 3px solid rgb(213, 217, 219);
       box-sizing: border-box;
       background-color: rgb(239, 242, 244);
