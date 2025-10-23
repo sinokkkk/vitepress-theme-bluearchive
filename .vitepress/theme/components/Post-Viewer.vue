@@ -1,7 +1,7 @@
 <template>
   <div class="view-box container">
     <content class="content" />
-    <Gitalk v-if="themeConfig.clientID"></Gitalk>
+    <!-- <Gitalk v-if="themeConfig.clientID"></Gitalk> -->
   </div>
 </template>
 <script setup lang="ts">
@@ -81,6 +81,7 @@ const themeConfig = useData().theme.value
 
   p {
     line-height: 28px;
+    font-size: 16px;
   }
 
   blockquote {

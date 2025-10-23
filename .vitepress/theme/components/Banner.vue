@@ -7,10 +7,11 @@
     <slot></slot>
 
     <!-- <canvas id="wave"></canvas> -->
-    <video autoplay muted loop class="bg-video" v-if="videoBanner">
+    <video autoplay muted loop class="bg-video" v-if="videoBanner && state.darkMode == 'light'">
       <source src="../assets/banner/banner_video.mp4" type="video/mp4" />
     </video>
-    <div class="bg-img" v-else></div>
+
+    <div class="bg-img" v-else="state.darkMode == 'dark'"></div>
   </div>
 </template>
 
@@ -19,7 +20,6 @@ import { useData } from 'vitepress'
 const themeConfig = useData().theme.value
 const videoBanner = themeConfig.videoBanner
 //由videobannner这个属性决定banner是放图片还是视频
-
 import { useStore } from '../store'
 const { state } = useStore()
 import { onMounted } from 'vue'

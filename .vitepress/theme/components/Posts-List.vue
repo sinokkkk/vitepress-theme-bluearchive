@@ -141,7 +141,7 @@ const finalPosts = computed(() => {
 })
 
 // 文章列表长度
-const pageSize = ref(5)
+const pageSize = ref(7)
 
 // 使用store中的currPage
 const currPage = computed({
@@ -327,7 +327,7 @@ watch(
       .cover-container {
         flex: 0 0 180px; //flex-grow 0 flex-shrink 0 flex-basis 180px
         //不占用额外空间也不会缩小 初始宽180px
-        height: 140px;
+        height: 120px;
         border-radius: 12px;
         overflow: hidden;
         position: relative;

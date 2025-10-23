@@ -69,8 +69,8 @@ export default defineConfigWithTheme<ThemeConfig>({
   // sitemap: {
   //   hostname: 'https://vitepress-theme-bluearchive.vercel.app',
   // },
-  title: "Sensei's 部落格",
-  description: "Sensei's 部落格",
+  title: 'SCHALE Blog',
+  description: 'SCHALE Blog',
   themeConfig: {
     // navBar
     menuList: [
@@ -81,15 +81,15 @@ export default defineConfigWithTheme<ThemeConfig>({
     //banner区配置
     videoBanner: true,
     name: 'sinok',
-    welcomeText: '牛战士',
-    motto: ['transition: transform 0.2s, color 0.5s, text-shadow 0'],
+    welcomeText: '夏莱公告板',
+    motto: ['Southwest Jiaotong University', 'Love from swjtu', '和你的日常，就是奇迹', '0932'],
     //motto: ['和你的日常，就是奇迹', '何気ない日常で、ほんの少しの奇跡を見つける物語。'],
 
     social: [
-      { icon: 'github', url: 'https://github.com/' },
+      { icon: 'github', url: 'https://github.com/sinokkkk' },
       { icon: 'bilibili', url: 'https://www.bilibili.com/' },
-      { icon: 'qq', url: 'https://im.qq.com/index/' },
-      { icon: 'wechat', url: 'https://weixin.qq.com/' },
+      // { icon: 'qq', url: 'https://im.qq.com/index/' },
+      //{ icon: 'wechat', url: 'https://weixin.qq.com/' },
     ],
 
     //spine语音配置，可选zh/jp

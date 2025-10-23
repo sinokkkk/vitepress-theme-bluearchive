@@ -33,8 +33,8 @@ const { state } = useStore()
 const selectedTheme = ref('system') //默认system
 
 const toggles = {
-  fireworksEnabled: '烟花',
-  SpinePlayerEnabled: 'Spine',
+  fireworksEnabled: '特效',
+  //SpinePlayerEnabled: 'Spine',
 }
 
 let darkModeMediaQuery: MediaQueryList //类型叫 MediaQueryList
