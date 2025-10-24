@@ -82,6 +82,7 @@ const themeConfig = useData().theme.value
   p {
     line-height: 28px;
     font-size: 16px;
+    font-weight: 100;
   }
 
   blockquote {
@@ -109,13 +110,16 @@ const themeConfig = useData().theme.value
   }
 
   strong {
-    font-weight: 600;
+    font-weight: 900;
+    padding-left: 2px;
+    padding-right: 2px;
   }
 
   code {
     font-family: 'JetBrains Mono', sans-serif !important;
     line-height: 0; // 修复行号对齐
-    border-radius: 3px;
+    border-radius: 6px;
+    background: #efefef;
   }
 
   /**
@@ -322,12 +326,12 @@ const themeConfig = useData().theme.value
 
     .lang {
       position: absolute;
-      transform: translate(-50%, -36px);
+      transform: translate(-50%, -40px);
       left: 50%;
       user-select: none;
       font-weight: bold;
-      padding-bottom: 10px;
-      border-bottom: 5px solid var(--font-color-gold);
+      padding-bottom: 3px;
+      border-bottom: 3px solid var(--font-color-gold);
     }
 
     button.copy {
@@ -335,7 +339,7 @@ const themeConfig = useData().theme.value
       top: 0;
       right: 0;
       width: 48px;
-      height: 48px;
+      height: 27px;
       cursor: pointer;
       background-image: var(--vp-icon-copy);
       background-repeat: no-repeat;
@@ -354,7 +358,7 @@ const themeConfig = useData().theme.value
       top: 0;
       left: 0;
       right: 0;
-      height: 40px;
+      height: 30px;
       border-bottom: 3px solid rgb(213, 217, 219);
       box-sizing: border-box;
       background-color: rgb(239, 242, 244);
